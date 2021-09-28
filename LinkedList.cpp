@@ -9,7 +9,14 @@ class Node {
     T data;
     int id;
     Node* next;
+    friend ostream& operator<<(ostream& os, const Node<T>& rhs);
 };
+
+template<typename T>
+ostream& operator<<(ostream& os, const Node<T>& rhs) {
+  os << "{ " << "ID: " << rhs->id << ", data: " << rhs->data << " }";
+  return os;
+}
 
 template <typename T>
 class LinkedList {
@@ -114,7 +121,6 @@ int main(int argc, const char** argv) {
   lli.push_back(112);
   lli.pop_back();
   lli.pop_front();
-  // lli.pop_front();
 
   LinkedList<string> lls;
   lls.push_front("ABC");
@@ -123,6 +129,6 @@ int main(int argc, const char** argv) {
   cout << "Head: " << "{ID: " << lli.head->id << ", data: " << lli.head->data << "}" <<endl;
   cout << "Second: " << "{ID: " << lli.head->next->id << ", data: " << lli.head->next->data << "}" <<endl;
   cout << "Tail: " << "{ID: " << lli.tail->id << ", data: " << lli.tail->data << "}" <<endl;
-  // cout << "First: " << "{ID: " << lls.head->id << ", data: " << lls.head->data << "}" <<endl;
+  cout << lli.tail;
   return 0;
 }
