@@ -85,6 +85,25 @@ void LinkedList<T>::pop_back() {
   }
 }
 
+template<typename T>
+void LinkedList<T>::pop_front() {
+  if(this->head == NULL) return;
+
+  Node<T>* temp = NULL;
+
+  if(this->head->next != NULL) {
+    temp = this->head->next;
+  }
+
+  this->head = temp;
+  this->length--;
+
+  if(this->length == 0) {
+    this->head = NULL;
+    this->tail = NULL;
+  }
+}
+
 int main(int argc, const char** argv) {
 
   // Node<int> ni;         // int Node
@@ -94,6 +113,8 @@ int main(int argc, const char** argv) {
   lli.push_front(789);
   lli.push_back(112);
   lli.pop_back();
+  lli.pop_front();
+  // lli.pop_front();
 
   LinkedList<string> lls;
   lls.push_front("ABC");
