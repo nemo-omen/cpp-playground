@@ -4,17 +4,26 @@
 using namespace std;
 
 template <typename T>
+class Node;
+
+template<typename T>
+ostream& operator<<(ostream &os, const Node<T> rhs);
+
+template <typename T>
 class Node {
   public:
     T data;
     int id;
     Node* next;
-    friend ostream& operator<<(ostream& os, const Node<T>& rhs);
+
+    // *note* we're passing the Node directly, not a reference to
+    // the Node -- when passing ref, this prints the mem location
+    friend ostream& operator<< <>(ostream& os, const Node rhs);
 };
 
 template<typename T>
-ostream& operator<<(ostream& os, const Node<T>& rhs) {
-  os << "{ " << "ID: " << rhs->id << ", data: " << rhs->data << " }";
+ostream& operator<<(ostream &os, const Node<T> rhs) {
+  os << "{ " << "ID: " << rhs.id << ", data: " << rhs.data << " }";
   return os;
 }
 
@@ -125,10 +134,14 @@ int main(int argc, const char** argv) {
   LinkedList<string> lls;
   lls.push_front("ABC");
 
+  Node<int> randomNode;
+  randomNode.data = 123;
+  randomNode.id = 676;
 
   cout << "Head: " << "{ID: " << lli.head->id << ", data: " << lli.head->data << "}" <<endl;
   cout << "Second: " << "{ID: " << lli.head->next->id << ", data: " << lli.head->next->data << "}" <<endl;
   cout << "Tail: " << "{ID: " << lli.tail->id << ", data: " << lli.tail->data << "}" <<endl;
-  cout << lli.tail;
+  cout << lli.tail << endl;
+  cout << randomNode;
   return 0;
 }
