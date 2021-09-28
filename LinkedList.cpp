@@ -14,8 +14,8 @@ class Node {
 template <typename T>
 class LinkedList {
   public:
-    Node<T>* head;
-    Node<T>* tail;
+    Node<T>* head = NULL;
+    Node<T>* tail = NULL;
     int length = 0;
     void push_front(T dat);
     void push_back(T dat);
@@ -28,47 +28,72 @@ void LinkedList<T>::push_front(T dat) {
   Node<T>* node = new Node<T>;
   node->data = dat;
 
-  if(this->length == 1) {
-    this->tail = this->head;
-    this->head = node;
-    this->head->next = this->tail;
-  } else {
-    node->next = this->head;
-    this->head = node;
+  if(this->tail == NULL) {
+    this->tail = node;
   }
+
+  if(this->head != NULL) {
+    node->next = this->head;
+  }
+
+  this->head = node;
+
 
   this->length++;
   this->head->id = this->length;
 }
 
-// template<typename T>
-// void LinkedList<T>::push_back(T dat) {
-//   Node<T>* node = new Node<T>;
-//   Node<T>* current = this->head;
+template<typename T>
+void LinkedList<T>::push_back(T dat) {
+  Node<T>* node = new Node<T>;
+  Node<T>* current = this->head;
+  node->data = dat;
 
-//   node->data = dat;
+  if(this->head == NULL) {
+    this->head = node;
+  }
 
-//   for(int i = 0; i < this->length; i++) {
-//     if(current->next) {
-//       current = current->next;
-//     } else {
-//       current->next = node;
-//       this->tail = current->next;
-//       this->length++;
-//       this->tail->id = this->length;
-//     }
-//   }
-// }
+  if(this->tail != NULL) {
+    this->tail->next = node;
+  }
+
+  this->tail = node;
+  this->length++;
+  this->tail->id = this->length;
+}
+
+template<typename T>
+void LinkedList<T>::pop_back() {
+  if(this->tail == NULL) return;
+
+  Node<T>* current = this->head;
+  Node<T>* target = current;
+
+  while(current->next != NULL) {
+    target = current;
+    current = current->next;
+  }
+
+  this->tail = target;
+  this->tail->next = NULL;
+
+  this->length--;
+
+  if(this->length == 0) {
+    this->head = NULL;
+    this->tail = NULL;
+  }
+}
 
 int main(int argc, const char** argv) {
 
   // Node<int> ni;         // int Node
   LinkedList<int> lli;  // int LinkedList
   lli.push_front(123);
-  // lli.push_front(456);
-  // lli.push_front(789);
-  // lli.push_back(789);
-
+  lli.push_front(456);
+  lli.push_front(789);
+  lli.push_back(112);
+  lli.pop_back();
 
   LinkedList<string> lls;
   lls.push_front("ABC");
