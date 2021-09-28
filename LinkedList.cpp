@@ -65,8 +65,8 @@ int main(int argc, const char** argv) {
   // Node<int> ni;         // int Node
   LinkedList<int> lli;  // int LinkedList
   lli.push_front(123);
-  lli.push_front(456);
-  lli.push_front(789);
+  // lli.push_front(456);
+  // lli.push_front(789);
   // lli.push_back(789);
 
 
