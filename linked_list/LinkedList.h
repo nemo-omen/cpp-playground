@@ -39,11 +39,20 @@ class LinkedList {
 template<typename T>
 Node<T>* LinkedList<T>::find(T dat) {
   Node<T>* current = this->head;
-  for(int i = 0; i < this->length; i++) {
+  Node<T>* target;
+  Node<T>* nullTarget;
+  for(current = this->head; current != NULL; current = current->next) {
     if(current->data == dat) {
-      return current;
+      target = current;
     }
-    current = current->next;
+  }
+
+  if(target != NULL) {
+    return target;
+  } else {
+    nullTarget->data = NULL;
+    nullTarget->id = NULL;
+    return nullTarget;
   }
 }
 

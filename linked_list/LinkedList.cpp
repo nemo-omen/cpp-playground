@@ -20,7 +20,6 @@ int main(int argc, const char** argv) {
 
   cout << lli.find(666) << endl;
   Node<int>* found = lli.find(112);
-  // found = lli.find(666);
   cout << found << endl;
   return 0;
 }
