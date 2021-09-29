@@ -6,8 +6,24 @@ using namespace std;
 template <typename T>
 class Node;
 
+template <typename T>
+class LinkedList;
+
+// pass by ref
+template<typename T>
+ostream& operator<<(ostream &os, const Node<T>* rhs);
+
+// pass by copy
 template<typename T>
 ostream& operator<<(ostream &os, const Node<T> rhs);
+
+// pass by ref - LinkedList
+template<typename T>
+ostream& operator<<(ostream &os, const LinkedList<T>* rhs);
+
+// pass by copy - LinkedList
+template<typename T>
+ostream& operator<<(ostream &os, const LinkedList<T> rhs);
 
 template <typename T>
 class Node {
@@ -16,11 +32,21 @@ class Node {
     int id;
     Node* next;
 
-    // *note* we're passing the Node directly, not a reference to
-    // the Node -- when passing ref, this prints the mem location
+    // pass by ref
+    friend ostream& operator<< <>(ostream& os, const Node* rhs);
+
+    // pass by copy
     friend ostream& operator<< <>(ostream& os, const Node rhs);
 };
 
+// pass by ref
+template<typename T>
+ostream& operator<<(ostream &os, const Node<T>* rhs) {
+  os << "{ " << "ID: " << rhs->id << ", data: " << rhs->data << " }";
+  return os;
+}
+
+// pass by copy
 template<typename T>
 ostream& operator<<(ostream &os, const Node<T> rhs) {
   os << "{ " << "ID: " << rhs.id << ", data: " << rhs.data << " }";
@@ -37,6 +63,12 @@ class LinkedList {
     void push_back(T dat);
     void pop_front();
     void pop_back();
+
+    // pass by ref
+    friend ostream& operator<< <>(ostream& os, const LinkedList* rhs);
+
+    // pass by copy
+    friend ostream& operator<< <>(ostream& os, const LinkedList rhs);
 };
 
 template <typename T>
@@ -120,28 +152,57 @@ void LinkedList<T>::pop_front() {
   }
 }
 
+// pass by ref
+template<typename T>
+ostream& operator<<(ostream &os, const LinkedList<T>* rhs) {
+  os << "[";
+
+  if(rhs->length > 0) {
+    Node<T>* current = rhs->head;
+    while(current->next != NULL) {
+      os << current << ", ";
+      current = current->next;
+    }
+    os << current;
+  }
+
+  os <<  "]" << endl;
+  return os;
+}
+
+// pass by copy
+template<typename T>
+ostream& operator<<(ostream &os, const LinkedList<T> rhs) {
+  os << "[";
+
+  if(rhs.length > 0) {
+    Node<T>* current = rhs.head;
+    while(current->next != NULL) {
+      os << current << ", ";
+      current = current->next;
+    }
+    os << current;
+  }
+  
+  os << "]" << endl;
+  return os;
+}
+
 int main(int argc, const char** argv) {
 
   // Node<int> ni;         // int Node
   LinkedList<int> lli;  // int LinkedList
+  cout << lli;
   lli.push_front(123);
+  cout << lli;
   lli.push_front(456);
   lli.push_front(789);
   lli.push_back(112);
   lli.pop_back();
-  lli.pop_front();
 
-  LinkedList<string> lls;
-  lls.push_front("ABC");
+  // cout << "lli.tail: " << lli.tail << endl;
 
-  Node<int> randomNode;
-  randomNode.data = 123;
-  randomNode.id = 676;
-
-  cout << "Head: " << "{ID: " << lli.head->id << ", data: " << lli.head->data << "}" <<endl;
-  cout << "Second: " << "{ID: " << lli.head->next->id << ", data: " << lli.head->next->data << "}" <<endl;
-  cout << "Tail: " << "{ID: " << lli.tail->id << ", data: " << lli.tail->data << "}" <<endl;
-  cout << lli.tail << endl;
-  cout << randomNode;
+  // cout << &lli;
+  cout << lli;
   return 0;
 }
