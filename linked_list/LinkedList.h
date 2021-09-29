@@ -19,6 +19,8 @@ class LinkedList {
     Node<T>* head = NULL;
     Node<T>* tail = NULL;
     int length = 0;
+    Node<T>* find(T dat);
+    // Node<T>* find(int id);
     void push_front(T dat);
     void push_back(T dat);
     void insert(T dat, int index);
@@ -33,6 +35,16 @@ class LinkedList {
     // pass by copy
     friend ostream& operator<< <>(ostream& os, const LinkedList rhs);
 };
+
+template<typename T>
+Node<T>* LinkedList<T>::find(T dat) {
+  Node<T>* current = this->head;
+  for(int i = 0; i < this->length; i++) {
+    if(current->data == dat) {
+      return current;
+    }
+  }
+}
 
 template <typename T>
 void LinkedList<T>::push_front(T dat) {
