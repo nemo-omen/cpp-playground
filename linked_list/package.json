@@ -2,7 +2,10 @@
   "name": "cpp-playground",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "LinkedList.cpp",
+  "nodemonConfig": {
+    "watch": "[LinkedList.h, Node.h]"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cppRun": "./LinkedList",

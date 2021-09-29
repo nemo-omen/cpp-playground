@@ -12,9 +12,6 @@ ostream& operator<<(ostream &os, const LinkedList<T>* rhs);
 template<typename T>
 ostream& operator<<(ostream &os, const LinkedList<T> rhs);
 
-template<typename T>
-ostream& operator+(const Node<T> rhs);
-
 
 template <typename T>
 class LinkedList {
@@ -24,6 +21,9 @@ class LinkedList {
     int length = 0;
     void push_front(T dat);
     void push_back(T dat);
+    void insert(T dat, int index);
+    void insertBefore(T dat, int index);
+    void insertAfter(T dat, int index);
     void pop_front();
     void pop_back();
 
@@ -32,8 +32,6 @@ class LinkedList {
 
     // pass by copy
     friend ostream& operator<< <>(ostream& os, const LinkedList rhs);
-
-    ostream& operator+(const Node<T> rhs);
 };
 
 template <typename T>
@@ -73,6 +71,70 @@ void LinkedList<T>::push_back(T dat) {
   this->tail = node;
   this->length++;
   this->tail->id = this->length;
+}
+
+template<typename T>
+void LinkedList<T>::insert(T dat, int index) {
+  if(index < 0 || index > this->length) return;
+  if(index == this->length) this->push_back(dat);
+  if(index == 0) this->push_front(dat);
+
+  Node<T>* node = new Node<T>;
+  Node<T>* current = this->head;
+
+  node->data = dat;
+  node->id = this->length + 1;
+
+  for(int i = 0; i < index - 1; i++) {
+    current = current->next;
+  }
+
+  node->next = current->next;
+  current->next = node;
+  this->length++;
+}
+
+template<typename T>
+void LinkedList<T>::insertBefore(T dat, int index) {
+  if(index <= 0 || index > this->length) return;
+  if(index == this->length) this->push_back(dat);
+  if(index == 1) {
+    this->push_front(dat);
+  } else {
+    Node<T>* node = new Node<T>;
+    Node<T>* current = this->head;
+
+    node->data = dat;
+    node->id = this->length + 1;
+
+    for(int i = 0; i < index - 2; i++) {
+      current = current->next;
+    }
+
+    node->next = current->next;
+    current->next = node;
+    this->length++;
+  }
+}
+
+template<typename T>
+void LinkedList<T>::insertAfter(T dat, int index) {
+  if(index < 0 || index > this->length) return;
+  if(index == this->length) this->push_back(dat);
+
+  Node<T>* node = new Node<T>;
+  Node<T>* current = this->head;
+
+  node->data = dat;
+  node->id = this->length + 1;
+
+  for(int i = 0; i < index; i++) {
+    current = current->next;
+  }
+
+  node->next = current->next;
+  current->next = node;
+  this->length++;
 }
 
 template<typename T>
@@ -151,19 +213,4 @@ ostream& operator<<(ostream &os, const LinkedList<T> rhs) {
   
   os << "]" << endl;
   return os;
-}
-
-template<typename T>
-ostream& operator+(Node<T> node) {
-  if(this->head == NULL) {
-    this->head = node;
-  }
-
-  if(this->tail != NULL) {
-    this->tail->next = node;
-  }
-
-  this->tail = node;
-  this->length++;
-  this->tail->id = this->length;
 }
