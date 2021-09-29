@@ -43,6 +43,7 @@ Node<T>* LinkedList<T>::find(T dat) {
     if(current->data == dat) {
       return current;
     }
+    current = current->next;
   }
 }
 

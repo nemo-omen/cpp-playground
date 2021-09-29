@@ -17,5 +17,10 @@ int main(int argc, const char** argv) {
   lli.insertAfter(444, 1);
   lli.insertBefore(666, 1);
   cout << lli;
+
+  cout << lli.find(666) << endl;
+  Node<int>* found = lli.find(112);
+  // found = lli.find(666);
+  cout << found << endl;
   return 0;
 }
