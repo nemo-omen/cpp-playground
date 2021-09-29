@@ -6,7 +6,6 @@ using namespace std;
 
 int main(int argc, const char** argv) {
 
-  // Node<int> ni;         // int Node
   LinkedList<int> lli;  // int LinkedList
   cout << lli;
   lli.push_front(123);
@@ -15,6 +14,8 @@ int main(int argc, const char** argv) {
   lli.push_front(789);
   lli.push_back(112);
   lli.pop_back();
+  
+  Node<int> fives = Node<int>(555);
 
   // cout << "lli.tail: " << lli.tail << endl;
 

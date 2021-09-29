@@ -12,6 +12,9 @@ ostream& operator<<(ostream &os, const LinkedList<T>* rhs);
 template<typename T>
 ostream& operator<<(ostream &os, const LinkedList<T> rhs);
 
+template<typename T>
+ostream& operator+(const Node<T> rhs);
+
 
 template <typename T>
 class LinkedList {
@@ -29,6 +32,8 @@ class LinkedList {
 
     // pass by copy
     friend ostream& operator<< <>(ostream& os, const LinkedList rhs);
+
+    ostream& operator+(const Node<T> rhs);
 };
 
 template <typename T>
@@ -146,4 +151,19 @@ ostream& operator<<(ostream &os, const LinkedList<T> rhs) {
   
   os << "]" << endl;
   return os;
+}
+
+template<typename T>
+ostream& operator+(Node<T> node) {
+  if(this->head == NULL) {
+    this->head = node;
+  }
+
+  if(this->tail != NULL) {
+    this->tail->next = node;
+  }
+
+  this->tail = node;
+  this->length++;
+  this->tail->id = this->length;
 }
