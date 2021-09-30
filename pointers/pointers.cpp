@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(int argc, const char** argv) {
-  int luckyNumbers[5];
+  // int luckyNumbers[5];
 
   // cout << luckyNumbers << endl; // will print the memory address of first element in array
   // cout << &luckyNumbers[0] << endl; // will __purposefully__ print the address of first element in array
